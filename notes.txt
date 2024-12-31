@@ -1,0 +1,40 @@
+CREW AI:
+    
+    - Agentic framework allows us to create agents to solve simple or complex task
+	- AI agents assume roles, share goals and operate in a cohesive unit like a well-oiled crew
+	- Each agent will perform special task and will be a SME.
+
+How CrewAI works:
+
+4 core components:
+	1. Agents:
+	- Expert in specific domain
+	- Properties:
+		○ Role - agent's function within the crew.
+		○ Goal - individual object agent aims to achieve. 
+		○ Backstory - provides context to the agent's role and goal.
+		○ Tools - set of capabilities or functions that agent can use to perform task such as searching web. 
+		○ Max iter - maximum number of iterations the agents need to perform before its forced to give the best answer.
+		○ Max rpm - max number of requests per minute the agent can perform to avoid rate limits.
+		○ Verbose - allows you to see what is actually going on during the crew execution.
+		○ Allow delegation - allows agent to delegate tasks or question to one another, ensuring task is handled by most suitable agent.
+	
+    2. Process
+	
+	- How agents will work together 
+	- How task will be assigned
+	- Interaction with each other
+	- How they will perform task.
+	
+	3. Tools
+	- Agents can use tools to complete tasks.
+	- Two types of tools: built in tools(in langchain) and custom tools(search web - we need serper api for this)
+	
+    4. Task
+	- Jobs that agents need to complete. 
+	- Requires collaboration between agents  
+	- Properties:
+		○ Description - clear and concise statement of what the task entails.
+		○ Agent - you can specify which agent is responsible for the task otherwise crew will determine who takes it on.
+		○ Tools - functions or capabilities that agent can use to perform task such as searching web.
+		○ Async execution - if task should be executed asynchronously(tasks can run simultaneously) 

@@ -5,7 +5,7 @@ from langchain.chat_models import ChatPhi3Model
 """
 
 Goal:
-- create a 4 days long weekend gateway itinerary with detailed per day plans, including budget, 
+- create a 4 days long weekend getaway itinerary with detailed per day plans, including budget, 
 packing suggestions and safety tips. 
 
 Captain/manager/boss:
@@ -32,10 +32,10 @@ class CustomAgent:
         return Agent(
             role="Expert Travel Agent",
             backstory=dedent(f"""Expert in travel planning and logistics.
-                             I have decades of experience making long weekend gateways itineraries.
+                             I have decades of experience making long weekend getaway itineraries.
                              """),
             goal=dedent(f"""
-                        Create a 4 days long weekend gateway itinerary with detailed per day plans,
+                        Create a 4 days long weekend getaway itinerary with detailed per day plans,
                         include budget, packing suggestions, and safety tips.
                         """),
             # tools="",
