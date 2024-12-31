@@ -3,11 +3,6 @@ from textwrap import dedent
 from langchain.llms import Ollama
 from langchain.chat_models import ChatPhi3Model
 """
-Creating agent cheat sheet:
-- Think like a boss. Work backwards from the goal and think which employee you need to hire to get the job done.
-- Define the captain of the crew who orient to the other agents towards the goal.
-- Define which experts the captain needs to communicate with and delegate the tasks to. 
-- Build a top down structure of the crew. 
 
 Goal:
 - create a 4 days long weekend gateway itinerary with detailed per day plans, including budget, 
