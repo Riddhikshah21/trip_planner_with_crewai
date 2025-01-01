@@ -1,8 +1,8 @@
 from crewai import Agent
 from textwrap import dedent
 from langchain.llms import Ollama
-from tools.search_tool import SearchTools
-from tools.calculator_tool import CalculatorTools
+from tools.search_tool import search_internet
+from tools.calculator_tool import calculate
 
 """
 Goal:
@@ -29,6 +29,7 @@ class TravelAgents:
         self.model = Ollama(model="phi3")
 
     def travel_agent(self):
+
         return Agent(
             role="Expert Travel Agent",
             backstory=dedent(f"""Expert in travel planning and logistics.
@@ -38,7 +39,7 @@ class TravelAgents:
                         Create a 4 days long weekend getaway itinerary with detailed per day plans,
                         include budget, packing suggestions, and safety tips.
                         """),
-            tools=[SearchTools.search_internet, CalculatorTools.calculate],
+            tools=[search_internet, calculate],
             allow_delegation=False,
             verbose=True,
             llm=self.model
@@ -49,7 +50,7 @@ class TravelAgents:
             role="City selection expert",
             backstory=dedent(f"""Expert at analyzing travel data to pick ideal destinations."""),
             goal=dedent(f"""Select the best cities based on the weather, season, prices, and traveler interests."""),
-            tools=[SearchTools.search_internet],
+            tools=[search_internet],
             allow_delegation=False,
             verbose=True,
             llm=self.model,
@@ -60,7 +61,7 @@ class TravelAgents:
             role="Local Tour Guide",
             backstory=dedent(f"""Knowledgeable local guide with extensive information about the city, it's attractions and customs"""),
             goal=dedent(f"""Provide the BEST insights about the selected city"""),
-            tools=[SearchTools.search_internet],
+            tools=[search_internet],
             allow_delegation=False,
             verbose=True,
             llm=self.model

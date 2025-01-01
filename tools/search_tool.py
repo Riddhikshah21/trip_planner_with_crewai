@@ -3,41 +3,46 @@ from langchain.tools import tool
 import json
 import os
 
-class SearchTools():
-    # @staticmethod
-    @tool("Search the internet")
-    def search_internet(query):
-        """
-        Perform a web search using the Serper API and return the top results.
-        
-        Args:
-            query (str): The search query.
-        
-        Returns:
-            str: Formatted search results or an error message if the search fails.
-        """
-        top_result = 5
-        url = "https://google.serper.dev/search"
-        payload = json.dumps({"q":query})
-        headers = {
-            'X-API-KEY': os.environ.get('SERPER_API_KEY'),
-            'content-type':'application/json'
-        }
-        response = requests.request("POST", url, headers=headers, data=payload)
-        print('hi')
-        if 'organic' not in response.json():
-            return "Sorry, I could not find any information about that, there could be some error with the serper api key."
-        else:
-            results = response.json()['organic']
-            string = []
-            for result in results[::top_result]:
-                try:
-                    string.append('\n'.join(
-                        [
-                            f"Title: {result['title']}", f"Link:{result['link']}",
-                            f"Snippet:{result['snippet']}", "\n___________"
-                        ]
-                    ))
-                except KeyError:
-                    next
-            return '\n'.join(string)
+# class SearchTools():
+   
+@tool("Search the internet")
+def search_internet(query):
+    """
+    A tool for searching the internet using the Serper API.
+    """
+    name = "serper_search"
+    description = (
+        "Searches the internet using the Serper API. Useful for answering questions requiring "
+        "real-time or up-to-date information. Returns the top search results."
+    )
+    # top_result = 5
+    api_url = "https://google.serper.dev/search"
+    # payload = json.dumps({"q":query})
+    api_key = os.environ.get('SERPER_API_KEY')
+    if not api_key:
+        print("API Key is missing!")
+    headers = {
+        'X-API-KEY': os.environ.get('SERPER_API_KEY'),
+        'content-type':'application/json'
+    }
+    
+    payload = {"q": query}
+
+    try:
+        response = requests.post(api_url, json=payload, headers=headers)
+        response.raise_for_status()
+        results = response.json()
+
+        # Extract and format the results
+        formatted_results = []
+        for item in results.get("organic", []):
+            formatted_results.append({
+                "title": item.get("title"),
+                "link": item.get("link"),
+                "snippet": item.get("snippet"),
+            })
+
+        return formatted_results
+
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
