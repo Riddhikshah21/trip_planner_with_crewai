@@ -1,9 +1,10 @@
 from crewai import Agent
 from textwrap import dedent
 from langchain.llms import Ollama
-from langchain.chat_models import ChatPhi3Model
-"""
+from tools.search_tool import SearchTools
+from tools.calculator_tool import CalculatorTools
 
+"""
 Goal:
 - create a 4 days long weekend getaway itinerary with detailed per day plans, including budget, 
 packing suggestions and safety tips. 
@@ -20,10 +21,9 @@ Notes:
 - Role is their job title.
 - Goals should be actionble.
 - Backstory should be their resume.
-
 """
 
-class CustomAgent:
+class TravelAgents:
     
     def __init__(self):
         self.model = Ollama(model="phi3")
@@ -38,7 +38,7 @@ class CustomAgent:
                         Create a 4 days long weekend getaway itinerary with detailed per day plans,
                         include budget, packing suggestions, and safety tips.
                         """),
-            # tools="",
+            tools=[SearchTools.search_internet, CalculatorTools.calculate],
             allow_delegation=False,
             verbose=True,
             llm=self.model
@@ -49,7 +49,7 @@ class CustomAgent:
             role="City selection expert",
             backstory=dedent(f"""Expert at analyzing travel data to pick ideal destinations."""),
             goal=dedent(f"""Select the best cities based on the weather, season, prices, and traveler interests."""),
-            # tools="",
+            tools=[SearchTools.search_internet],
             allow_delegation=False,
             verbose=True,
             llm=self.model,
@@ -60,7 +60,7 @@ class CustomAgent:
             role="Local Tour Guide",
             backstory=dedent(f"""Knowledgeable local guide with extensive information about the city, it's attractions and customs"""),
             goal=dedent(f"""Provide the BEST insights about the selected city"""),
-            # tools="",
+            tools=[SearchTools.search_internet],
             allow_delegation=False,
             verbose=True,
             llm=self.model

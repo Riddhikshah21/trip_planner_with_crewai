@@ -1,9 +1,9 @@
 from langchain.tools import tool
 
-class CalculatorTools:
-    @staticmethod
+class CalculatorTools():
+    # @staticmethod
     @tool("Perform calculation")
-    def calculate(opr):
+    def calculate(self, opr):
         try:
             return eval(opr)
         except SyntaxError:

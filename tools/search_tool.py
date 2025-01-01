@@ -3,18 +3,28 @@ from langchain.tools import tool
 import json
 import os
 
-class SearchTool:
-    @staticmethod
+class SearchTools():
+    # @staticmethod
     @tool("Search the internet")
     def search_internet(query):
-        top_result = 4
-        url = "https://google.com"
-        payload = json.dumps({'q':query})
+        """
+        Perform a web search using the Serper API and return the top results.
+        
+        Args:
+            query (str): The search query.
+        
+        Returns:
+            str: Formatted search results or an error message if the search fails.
+        """
+        top_result = 5
+        url = "https://google.serper.dev/search"
+        payload = json.dumps({"q":query})
         headers = {
-            'X_API_KEY': os.environ['API_KEY'],
+            'X-API-KEY': os.environ.get('SERPER_API_KEY'),
             'content-type':'application/json'
         }
         response = requests.request("POST", url, headers=headers, data=payload)
+        print('hi')
         if 'organic' not in response.json():
             return "Sorry, I could not find any information about that, there could be some error with the serper api key."
         else:

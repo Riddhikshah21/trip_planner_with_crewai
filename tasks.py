@@ -2,14 +2,14 @@ from crewai import Task
 from textwrap import dedent
 
 
-class CustomTasks:
+class TravelTasks:
 
     def __tip_section(self):
         return "If you do your BEST WORK, I will give you $100 commission!!"
     
     def plan_itinerary(self, agent, city, travel_dates, interests):
         return Task(
-            expected_output="A detailed itinerary as a string describing activities and plans",
+            # expected_output="A detailed itinerary as a string describing activities and plans",
             description=dedent(
                 f"""
                 **Task**: Develop a 4-day long weekend itinerary
@@ -32,7 +32,7 @@ class CustomTasks:
     
     def gather_city_info(self, agent, city, travel_dates, interests):
         return Task(
-            expected_output="Gather in depth city guide information.",
+            # expected_output="Gather in depth city guide information.",
             description=dedent(
                 f"""
                 **Task**: Gather in depth city guide information.
@@ -53,7 +53,7 @@ class CustomTasks:
     
     def identify_city(self, agent, origin, cities, travel_dates, interests):
         return Task(
-            expected_output="Identify the BEST city to visit for the trip.",
+            # expected_output="Identify the BEST city to visit for the trip.",
             description=dedent(
                 f"""
                 **Task**: Identify the BEST city to visit for the trip.
