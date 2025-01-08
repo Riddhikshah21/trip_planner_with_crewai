@@ -26,7 +26,7 @@ Notes:
 class TravelAgents:
     
     def __init__(self):
-        self.model = Ollama(model="phi3")
+        self.model = Ollama(model="phi4")
 
     def travel_agent(self):
 
