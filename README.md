@@ -31,8 +31,7 @@ This project is an **Agentic AI** solution for planning trips, utilizing CrewAI 
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/trip-planner.git
-cd trip-planner
+git clone https://github.com/Riddhikshah21/trip_planner_with_crewai.git
 ```
 
 ### Step 2: Configure Environment Variables
@@ -50,7 +49,7 @@ ollama run phi4
 ### Step 4: Run the Application
 Start the trip planner script:
 ```bash
-python trip_planner.py
+python main.py
 ```
 
 ## Usage
