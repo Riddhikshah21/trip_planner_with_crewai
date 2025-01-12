@@ -4,19 +4,40 @@ from textwrap import dedent
 from agents import TravelAgents
 from tasks import TravelTasks
 from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import List, Optional
 
 load_dotenv()
 
-class TripCrew:
+app = FastAPI()
 
-    def __init__(self, origin, cities, date_range, interests):
-        self.origin = origin
-        self.cities = cities
-        self.date_range = date_range
-        self.interests = interests
+class TripRequest(BaseModel):
+    origin: str
+    cities: List[str]
+    date_range: str
+    interests: Optional[List[str]]
 
-    def run(self):
-        #define custom agents and tasks
+class TripResponse(BaseModel):
+    itinerary: str
+
+@app.get("/")
+def welcome_message():
+    return {
+        "message": "Welcome to your personal trip planner! I'm an AI Agent here to assist with crafting your perfect travel itinerary."
+    }
+
+@app.post('/get_travel_itinerary', response_model=TripResponse)
+def get_travel_itinerary(request: TripRequest):
+    """
+    Endpoint to get travel itinerary. Expects a JSON payload with origin, cities, date_range, and interests.
+    """
+    try:
+        origin = request.origin
+        cities = request.cities
+        date_range = request.date_range
+        interests = request.interests or []
+
         agents = TravelAgents()
         tasks = TravelTasks()
 
@@ -24,9 +45,20 @@ class TripCrew:
         city_selection = agents.city_selection()
         local_tour_guide = agents.local_tour_guide()
 
-        plan_itinerary = tasks.plan_itinerary(travel_agent, self.cities, self.date_range, self.interests)
-        gather_city_info = tasks.gather_city_info(local_tour_guide, self.cities, self.date_range, self.interests)
-        identify_city = tasks.identify_city(city_selection, self.origin, self.cities, self.date_range, self.interests)
+        # plan_itinerary = tasks.plan_itinerary(travel_agent, cities, date_range, interests = {})
+        # gather_city_info = tasks.gather_city_info(local_tour_guide, cities, date_range, interests = {})
+        # identify_city = tasks.identify_city(city_selection, origin, cities, date_range, interests = {})
+
+        plan_itinerary = tasks.plan_itinerary(
+            travel_agent, cities, date_range, interests
+        )
+        gather_city_info = tasks.gather_city_info(
+            local_tour_guide, cities, date_range, interests
+        )
+        identify_city = tasks.identify_city(
+            city_selection, origin, cities, date_range, interests
+        )
+
 
         #define crew
         crew = Crew(
@@ -43,42 +75,7 @@ class TripCrew:
             verbose=True
         )
         result = crew.kickoff()
-        return result
-
-if __name__ == "__main__":
-    print("Welcome to Trip Planner Crew")
-    print("----------------------------")
-    location = input(
-        dedent(
-            """
-            From where will you be travelling from?
-            """
-        )
-    )
-    cities = input(
-        dedent(
-            """
-            What are the cities options you are interested in visting?
-            """
-        )
-    )
-    date_range = input(
-        dedent(
-            """
-            What is the date range you are interested in travelling?
-            """
-        )
-    )
-    interests = input(
-        dedent(
-            """
-            What are some of your high level interests and hobbies?
-            """
-        )
-    )
-    trip_crew = TripCrew(location, cities, date_range, interests)
-    result = trip_crew.run()
-    print("\n-----------------------------------")
-    print("## Here is your long weekend getaway plan:")
-    print("-------------------------------------")
-    print(result)
+        return TripResponse(itinerary=result)
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")

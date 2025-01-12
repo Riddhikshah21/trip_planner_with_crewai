@@ -9,7 +9,7 @@ class TravelTasks:
     
     def plan_itinerary(self, agent, city, travel_dates, interests):
         return Task(
-            # expected_output="A detailed itinerary as a string describing activities and plans",
+            expected_output="A detailed itinerary as a string describing activities and plans", # type: ignore
             description=dedent(
                 f"""
                 **Task**: Develop a 4-day long weekend itinerary
@@ -32,7 +32,7 @@ class TravelTasks:
     
     def gather_city_info(self, agent, city, travel_dates, interests):
         return Task(
-            # expected_output="Gather in depth city guide information.",
+            expected_output="Gather in depth city guide information.", # type: ignore
             description=dedent(
                 f"""
                 **Task**: Gather in depth city guide information.
@@ -53,7 +53,7 @@ class TravelTasks:
     
     def identify_city(self, agent, origin, cities, travel_dates, interests):
         return Task(
-            # expected_output="Identify the BEST city to visit for the trip.",
+            expected_output="Identify the BEST city to visit for the trip.", # type: ignore
             description=dedent(
                 f"""
                 **Task**: Identify the BEST city to visit for the trip.

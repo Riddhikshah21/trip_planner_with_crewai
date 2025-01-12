@@ -1,6 +1,6 @@
+from langchain_ollama import OllamaLLM
 from crewai import Agent
 from textwrap import dedent
-from langchain.llms import Ollama
 from tools.search_tool import search_internet
 from tools.calculator_tool import calculate
 
@@ -26,7 +26,8 @@ Notes:
 class TravelAgents:
     
     def __init__(self):
-        self.model = Ollama(model="phi4")
+        # Initialize Ollama with the phi4 model
+        self.model = OllamaLLM(model="phi4")
 
     def travel_agent(self):
 
