@@ -75,3 +75,30 @@ class TravelTasks:
             ),
             agent=agent,
         )
+    
+    def get_recommendations(self, agent, city, travel_dates, interests):
+        return Task(
+            expected_output="A list of clothing items to pack for the trip, considering the weather, local fashion, and cultural norms of the destination.",
+            description=dedent(
+                f"""
+                **Task**: Gather in depth city guide information.
+                **Description**: Compile an in-depth guide for selected city, gathering information about
+                key attractions, local customs, special events, local cafe, and daily activity recommendations.
+                This guide should provide a thorough overview of what the city has to offer, including 
+                hidden gems, cultural hotspots, must-visit landmarks, weather forcasts and high-level cost.
+                **Parameters**
+                - City: {city}
+                - Travel dates: {travel_dates}
+                - Traveler interests: {interests}
+
+                **Notes**: {self.__tip_section()}
+                """
+            ),
+            agent=agent,
+                # description=(
+                #     "Generate personalized clothing recommendations for the trip based on the destination's "
+                #     "weather, local fashion trends, and cultural norms."
+                # )
+              
+        )
+    

@@ -12,6 +12,7 @@ langchain = ">=0.0.354,<0.0.355"
 unstructured = "==0.10.25"
 pyowm = '3.3.0'
 python-dotenv = "1.0.0"
+wikipediaapi
 
 [tool.pyright]
 useLibraryCodeForTypes = true

@@ -3,6 +3,7 @@ from crewai import Agent
 from textwrap import dedent
 from tools.search_tool import search_internet
 from tools.calculator_tool import calculate
+from tools.recommender_tool import get_cultural_norms, generate_recommendations, get_weather, scrape_fashion_trends
 
 """
 Goal:
@@ -68,3 +69,12 @@ class TravelAgents:
             llm=self.model
         )
 
+    def clothing_agent(self):
+        return Agent(
+            role="Clothing Recommender",
+            goal="Provide personalized clothing recommendations for the trip",
+            backstory="An expert in fashion and travel, skilled in analyzing weather, trends, and cultural norms.",
+            tools=[get_cultural_norms, generate_recommendations, get_weather, scrape_fashion_trends],
+            verbose=True,
+            llm=self.model
+        )
